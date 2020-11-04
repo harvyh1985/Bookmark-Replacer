@@ -1,0 +1,12 @@
+.tableTd {
+    word-wrap: break-word;
+    word-break: break-all;
+    width: 200;
+    border-width: 1;
+    border-style: dotted;
+}
+
+.tablePreview {
+    border-width: 1;
+    border-style: solid;
+}

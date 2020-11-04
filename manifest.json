@@ -1,0 +1,24 @@
+{
+	"manifest_version": 2,
+	"name": "Bookmark Replacer",
+	"version": "1.0.0",
+	"description": "收藏页地址全局快速替换",
+	"icons":
+	{
+		"16": "img/icon.png",
+		"48": "img/icon.png",
+		"128": "img/icon.png"
+	},
+	"browser_action": 
+	{
+		"default_icon": "img/icon.png",
+		"default_title": "收藏页快速替换",
+		"default_popup": "popup.html"
+	},
+	"permissions": [
+		"bookmarks"
+	],
+	"web_accessible_resources": ["js/injectPopup.js"],
+	"homepage_url": "https://github.com/harvyh1985",
+	"content_security_policy": "script-src 'self' https://ajax.googleapis.com; object-src 'self'"
+}

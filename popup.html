@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <script src="js/injectPopup.js"></script>
+        <link type="text/css" href="css/popup.css" rel="stylesheet"/>
+    </head>
+    <body align="center">    
+        <table id="main" border="0" width="400">
+            <tr>
+                <td colspan="2" align="center"><img src="img/icon.png" style="width: 24; height: 24;"/>书签页地址全局替换</td>
+            </tr>
+            <tr>
+                <td colspan="2">&nbsp;</td>
+            </tr>
+            <tr>
+               <td>
+                   待替换(支持正则表达式)
+               </td> 
+               <td>
+                   <input type="text" id="searchPattern">
+               </td>
+            </tr>
+            <tr>
+                <td>
+                    替换为
+                </td> 
+                <td>
+                    <input type="text" id="replacer">
+                </td>
+             </tr>
+             <tr>
+                 <td colspan="2" align="center">
+                    <input type="button" value="替换" id="btnReplace"/>
+                    <input type="button" value="关闭"/>
+                 </td>
+             </tr>
+        </table>
+        <div>&nbsp;</div>
+        <table id="tablePreview" width="400" class="tablePreview">
+        </table>
+    </body>
+</html>
