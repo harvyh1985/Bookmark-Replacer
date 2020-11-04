@@ -39,8 +39,7 @@ function searchBookmarks(preview, _searchPattern, _replacer) {
         if (_allNodes[i].url.indexOf(_searchPattern) > 0) {
             var _replaced = _allNodes[i].url.replace(_searchPattern, _replacer);
             if (!preview) {
-                var _replaceObj = { "url":_replaced};
-                chrome.bookmarks.update(_allNodes[i].id, _replaceObj, function () { });
+                chrome.bookmarks.update(_allNodes[i].id, { "url":_replaced}, function () { });
             }
             else {
                 generatePreviewRow(_allNodes[i].url, _replaced);
@@ -50,13 +49,12 @@ function searchBookmarks(preview, _searchPattern, _replacer) {
             try {
                 var _regPattern = eval(_searchPattern);
                 if (_regPattern.test(_allNodes[i].url)) {
-                    var _replced = _regPattern.replace(_allNodes[i].url, _replacer);
+                    var _replaced = _regPattern.replace(_allNodes[i].url, _replacer);
                     if (!preview) {                        
-                        var _replaceObj = { "url":_replaced};
-                        chrome.bookmarks.update(_allNodes[i].id,  _replaceObj , function () { });
+                        chrome.bookmarks.update(_allNodes[i].id,  { "url":_replaced} , function () { });
                     }
                     else {
-                        generatePreviewRow(_allNodes[i].url, _replced);
+                        generatePreviewRow(_allNodes[i].url, _replaced);
                     }
                 }
             }
