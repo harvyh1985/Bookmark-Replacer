@@ -2,7 +2,12 @@ document.addEventListener('DOMContentLoaded', function () {
     _allNodes = [];
     enumList();
     document.getElementById("btnReplace").onclick = clickBtnReplace;
+    document.getElementById("btnClose").onclick = clickBtnClose;
 });
+
+function clickBtnClose() {
+    window.close();
+}
 
 function clickBtnReplace() {
     var _btnReplace = document.getElementById("btnReplace");
@@ -21,29 +26,34 @@ function clickBtnReplace() {
         return;
     generatePreviewRow("原始地址", "替换后地址");
     var _confirmdReplace = _btnReplace.state != undefined && _btnReplace.state == "1";
-    searchBookmarks(!_confirmdReplace,_searchPattern,_replacer);
-    if (_confirmdReplace) {
-        _btnReplace.value = "替换";
-        _btnReplace.state = "0";
-        alert("替换完成");
-        clearPreviewRows();
-    }
-    else {
-        _btnReplace.value = "确认替换";
-        _btnReplace.state = "1"
+    var _matched = searchBookmarks(!_confirmdReplace, _searchPattern, _replacer);
+    if (_matched) {
+        if (_confirmdReplace) {
+            _btnReplace.value = "替换";
+            _btnReplace.state = "0";
+            alert("替换完成");
+            clearPreviewRows();
+        }
+        else {
+            _btnReplace.value = "确认替换";
+            _btnReplace.state = "1"
+        }
     }
 }
 
 function searchBookmarks(preview, _searchPattern, _replacer) {
+    var _matched = false;
     for (var i in _allNodes) {
         if (_allNodes[i].url.indexOf(_searchPattern) > 0) {
             var _replaced = _allNodes[i].url.replace(_searchPattern, _replacer);
             if (!preview) {
-                chrome.bookmarks.update(_allNodes[i].id, { "url":_replaced}, function () { });
+                chrome.bookmarks.update(_allNodes[i].id, { "url": _replaced }, function () { });
+                _allNodes[i].url = _replaced;
             }
             else {
                 generatePreviewRow(_allNodes[i].url, _replaced);
             }
+            _matched = true;
         }
         else if (_searchPattern.indexOf("/") == 0) {
             try {
@@ -51,7 +61,8 @@ function searchBookmarks(preview, _searchPattern, _replacer) {
                 if (_regPattern.test(_allNodes[i].url)) {
                     var _replaced = _regPattern.replace(_allNodes[i].url, _replacer);
                     if (!preview) {                        
-                        chrome.bookmarks.update(_allNodes[i].id,  { "url":_replaced} , function () { });
+                        chrome.bookmarks.update(_allNodes[i].id, { "url": _replaced }, function () { });
+                        _allNodes[i].url = _replaced;
                     }
                     else {
                         generatePreviewRow(_allNodes[i].url, _replaced);
@@ -59,8 +70,10 @@ function searchBookmarks(preview, _searchPattern, _replacer) {
                 }
             }
             catch (e) { }
+            _matched = true;
         }
     }
+    return _matched;
 }
 
 function clearPreviewRows() {
